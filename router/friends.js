@@ -9,39 +9,56 @@ let friends = {
 };
 
 
-// GET request: Retrieve all friends
+
 router.get("/",(req,res)=>{
 
-  // Update the code here
-
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
+  res.send(JSON.stringify({friends,length:friends.length}));
 });
 
-// GET by specific ID request: Retrieve a single friend with email ID
+
 router.get("/:email",(req,res)=>{
-  // Update the code here
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
+  const email=req.params.email;
+
+  res.json({user:friends[email]});
 });
 
 
 // POST request: Add a new friend
 router.post("/",(req,res)=>{
-  // Update the code here
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
+  const email=req.body.email;
+  const obj=req.body.obj;
+  
+  friends[email]=obj;
+  res.send(JSON.stringify({friends,length:friends.length}))
 });
 
 
-// PUT request: Update the details of a friend with email id
+
 router.put("/:email", (req, res) => {
-  // Update the code here
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
+  const email=req.params.email;
+  const obj=req.body.obj;
+  
+  if (friends.hasOwnProperty(email)) {
+    
+    friends[email].firstName = obj.firstName;
+    friends[email].lastName = obj.lastName;
+    friends[email].DOB =obj.DOB;
+
+    return res.send(`Friend with the email ${email} updated.`);
+
+}
+  res.send('Error!!!')
 });
 
 
-// DELETE request: Delete a friend by email id
+
 router.delete("/:email", (req, res) => {
-  // Update the code here
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
+  
+  if (friends.hasOwnProperty(email)) {
+    
+    delete friends[email];
+}
+res.send(`Friend with the email ${email} deleted.`);
 });
 
 module.exports=router;
